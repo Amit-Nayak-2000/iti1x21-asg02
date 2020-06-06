@@ -391,7 +391,7 @@ public class TicTacToe {
   public int[] emptyPositions() {
 
     // YOUR CODE HERE
-
+    return null;
   }
 
   /**
@@ -405,6 +405,7 @@ public class TicTacToe {
   public TicTacToe cloneNextPlay(int nextMove) {
 
     // YOUR CODE HERE
+    return null;
 
   }
 
@@ -421,6 +422,7 @@ public class TicTacToe {
   public boolean equals(Object obj) {
 
     // YOUR CODE HERE
+    return false;
 
   }
 
