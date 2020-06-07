@@ -441,6 +441,17 @@ public class TicTacToe {
       return false;
     }
 
+    TicTacToe other = (TicTacToe) obj;
+
+    if(this.numRows != other.numRows || this.numColumns != other.numColumns || this.sizeToWin != other.sizeToWin){
+      return false;
+    }
+
+    for(int i = 0; i < (this.numRows*this.numColumns); i++){
+      if(this.board[i] != other.valueAt(i+1)){
+        return false;
+      }
+    }
 		return true;
     
   }

@@ -49,7 +49,16 @@ public class TicTacToeEnumerations {
    */
   public LinkedList<LinkedList<TicTacToe>> generateAllGames() {
 
-    // YOUR CODE HERE
+    LinkedList<LinkedList<TicTacToe>> allGames = new LinkedList<LinkedList<TicTacToe>>();
+    TicTacToeGame newGame = new TicTacToeGame(this.numRows, this.numColumns, this.sizeToWin);
+		LinkedList<TicTacToeGame> level = new LinkedList<TicTacToeGame>();
+    level.add(newGame);
+		AllGames.add(level);
+    boolean flag = true;
+
+    while(flag == true){
+      
+    }
 
     return allGames;
   }
