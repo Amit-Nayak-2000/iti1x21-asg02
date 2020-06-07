@@ -1,4 +1,5 @@
 public class ComputerInOrderPlayer implements Player  {
+
   public boolean play(TicTacToe game){
     if(game.gameState != GameState.PLAYING){
         System.out.println("Game is not playable.");
@@ -12,6 +13,6 @@ public class ComputerInOrderPlayer implements Player  {
             }
         }
     }
-    return false;
+    return true;
   }
 }

@@ -2,6 +2,14 @@ import java.util.LinkedList;
 
 public class TicTacToeEnumerations {
 
+  CellValue[] board;
+  int numRows;
+  int numColumns;
+  int numRounds;
+  GameState gameState;
+  int sizeToWin;
+  CellValue currentPlayer;
+  int lastPlayedPosition;
 
   // YOUR CODE HERE
 
@@ -21,9 +29,18 @@ public class TicTacToeEnumerations {
    * @param aSizeToWin the number of cells that must be aligned to win.
    */
   public TicTacToeEnumerations(int aNumRows, int aNumColumns, int aSizeToWin) {
+    numRows = aNumRows;
+    numColumns = aNumColumns;
+    sizeToWin = aSizeToWin;
+    gameState = GameState.PLAYING;
+    currentPlayer = CellValue.EMPTY;
+    lastPlayedPosition = 0;
 
-    // YOUR CODE HERE
-
+    int boardSize = numRows * numColumns;
+    board = new CellValue[boardSize];
+    for (int i=0; i<boardSize; i++) {
+      board[i] = CellValue.EMPTY;
+    }
   }
 
   /**

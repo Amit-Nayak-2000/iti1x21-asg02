@@ -389,9 +389,16 @@ public class TicTacToe {
    * @return All empty positions
    */
   public int[] emptyPositions() {
-
-    // YOUR CODE HERE
-    return null;
+    int freeSpace = (this.numRows * this.numColumns) - this.numRounds;
+    int[] freeSlots = new int[freeSpace];
+    int counter = 0;
+    for(int i = 1; i <=(this.numRows * this.numColumns); i++){
+        if(this.valueAt(i) == CellValue.EMPTY){
+          freeSlots[counter] = i;
+          counter +=1;
+        }
+    }
+    return freeSlots;
   }
 
   /**
@@ -403,10 +410,20 @@ public class TicTacToe {
    * @return A new TicTacToe game
    */
   public TicTacToe cloneNextPlay(int nextMove) {
-
-    // YOUR CODE HERE
+    TicTacToe clone = new TicTacToe(this.numRows, this.numColumns, this.sizeToWin);
+    clone.numRounds = this.numRounds;
+    clone.gameState = this.gameState;
+    clone.currentPlayer = this.currentPlayer;
+    clone.lastPlayedPosition = this.lastPlayedPosition;
+    for(int i=1; i <=(numRows * numColumns); i++){
+			clone.board[i-1] = this.valueAt(i);
+		}
+    if(clone.valueAt(nextMove) == CellValue.EMPTY && clone.gameState == GameState.PLAYING){
+      clone.play(nextMove);
+      return clone;
+    }
+    
     return null;
-
   }
 
   /**
@@ -420,10 +437,12 @@ public class TicTacToe {
    * @return True if they represent the same state
    */
   public boolean equals(Object obj) {
+    if(!(obj instanceof TicTacToe) || obj == null){
+      return false;
+    }
 
-    // YOUR CODE HERE
-    return false;
-
+		return true;
+    
   }
 
   /**

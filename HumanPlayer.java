@@ -13,10 +13,12 @@ public class HumanPlayer implements Player{
         System.out.println(game.toString());
 
         if (game.nextPlayer() == CellValue.X){
+            System.out.println("\n\n");
             System.out.println("X to play: ");
             move = sc.nextInt();
         }
         if (game.nextPlayer()  == CellValue.O) {
+            System.out.println("\n\n");
             System.out.println("O to play: ");
             move = sc.nextInt();
         }
