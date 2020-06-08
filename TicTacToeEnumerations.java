@@ -2,21 +2,21 @@ import java.util.LinkedList;
 
 public class TicTacToeEnumerations {
 
-  CellValue[] board;
+  // CellValue[] board;
   int numRows;
   int numColumns;
-  int numRounds;
-  GameState gameState;
+  // int numRounds;
+  // GameState gameState;
   int sizeToWin;
-  CellValue currentPlayer;
-  int lastPlayedPosition;
+  // CellValue currentPlayer;
+  // int lastPlayedPosition;
 
   // YOUR CODE HERE
 
   /**
    * The list of lists of all generated games
    */
-  LinkedList<LinkedList<TicTacToe>> allGames;
+  LinkedList<LinkedList<TicTacToe>> allGames = new LinkedList<LinkedList<TicTacToe>>();
 
 
   /**
@@ -24,7 +24,7 @@ public class TicTacToeEnumerations {
    * of your game as rows x coluns grid, and a sizeToWin
    * to analyze.
    *
-   * @param aNumRows the number of lines in the game
+   * @param aNumRows the number of numRows in the game
    * @param aNumColumns the number of columns in the game
    * @param aSizeToWin the number of cells that must be aligned to win.
    */
@@ -32,36 +32,72 @@ public class TicTacToeEnumerations {
     numRows = aNumRows;
     numColumns = aNumColumns;
     sizeToWin = aSizeToWin;
-    gameState = GameState.PLAYING;
-    currentPlayer = CellValue.EMPTY;
-    lastPlayedPosition = 0;
-
-    int boardSize = numRows * numColumns;
-    board = new CellValue[boardSize];
-    for (int i=0; i<boardSize; i++) {
-      board[i] = CellValue.EMPTY;
-    }
   }
+  //   this.gameState = GameState.PLAYING;
+  //   this.currentPlayer = CellValue.EMPTY;
+  //   this.lastPlayedPosition = 0;
+
+  //   int boardSize = numRows * numColumns;
+  //   board = new CellValue[boardSize];
+  //   for (int i=0; i<boardSize; i++) {
+  //     board[i] = CellValue.EMPTY;
+  //   }
+  // }
 
   /**
    * Generate a list of lists of all games, storing the
    * result in the member variables `allGames`.
    */
   public LinkedList<LinkedList<TicTacToe>> generateAllGames() {
+    TicTacToe game = new TicTacToe(this.numRows, this.numColumns, this.sizeToWin);
+    LinkedList<TicTacToe> baseLevel = new LinkedList<TicTacToe>();
+    baseLevel.add(game);
+    allGames.add(baseLevel);
+    int counter = 1;
+    boolean valid = true;
 
-    LinkedList<LinkedList<TicTacToe>> allGames = new LinkedList<LinkedList<TicTacToe>>();
-    TicTacToeGame newGame = new TicTacToeGame(this.numRows, this.numColumns, this.sizeToWin);
-		LinkedList<TicTacToeGame> level = new LinkedList<TicTacToeGame>();
-    level.add(newGame);
-		AllGames.add(level);
-    boolean flag = true;
+    while(valid){
+      LinkedList<TicTacToe> nextLevel = new LinkedList<TicTacToe>();
+      allGames.add(nextLevel);
 
-    while(flag == true){
+      for(int i = 0; i < allGames.get(counter - 1).size(); i++){
+        
+        if(allGames.get(counter-1).get(i).gameState == GameState.PLAYING){
+          int[] emptySlots = allGames.get(counter-1).get(i).emptyPositions();
+
+
+          for(int j = 0; j < emptySlots.length; j++){
+            TicTacToe compare = allGames.get(counter - 1).get(i).cloneNextPlay(emptySlots[j]);
+            boolean isRepeated = false;
+
+            for(int k = 0; k < allGames.get(counter).size(); k++){
+              if(compare.equals(allGames.get(counter).get(k))){
+                isRepeated = true;
+              }
+
+            }
+
+            if(isRepeated == false){
+              allGames.get(counter).add(compare);
+            }
+          }
+        }
+      }
       
+      valid = false;
+      for(int i = 0; i < allGames.get(counter).size(); i++){
+        if(allGames.get(counter).get(i).gameState == GameState.PLAYING){
+          valid = true;
+        }
+      }
+      counter++;
     }
-
-    return allGames;
+		// returns the linked list of linked lists of tic tac toe games
+		return allGames;
   }
+
+    
+  
 
   public String toString() {
     if (allGames == null) {
