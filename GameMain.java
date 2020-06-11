@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class GameMain {
 
@@ -25,8 +26,90 @@ public class GameMain {
         System.out.println("Too many arguments. Only the first 5 are used.");
     }
 
-    TicTacToe game;
+    TicTacToe game = new TicTacToe(lines,columns,wins);
     Player[] players = new Player[] {p1, p2};
+
+    boolean playGame = true;
+    boolean firstMove = true;
+    int currentPlayer = 0;
+    // char playAgain = ' ';
+    
+
+    Scanner scan = new Scanner(System.in);
+
+    while(playGame){
+      if(firstMove){
+        game = new TicTacToe(lines,columns,wins);
+        currentPlayer = (int)(players.length*Math.random());
+        promptNext(currentPlayer);
+        //System.out.println(game.toString());
+        players[currentPlayer].play(game);
+        currentPlayer = nextPlayer(currentPlayer);
+        promptNext(currentPlayer);
+        firstMove = false;
+        continue;
+      }
+
+      if(players[currentPlayer].play(game) == true){
+        switch(game.gameState){
+          case XWIN: 
+            playGame = false;
+            System.out.println("Game Over\n");
+            System.out.println(game.toString());
+            System.out.println("\nResult: XWIN"); 
+            System.out.println("Play Again (y)?: ");
+            char playAgain = scan.next().charAt(0);
+            if(playAgain == 'y'){
+              playGame = true;
+              firstMove = true;
+            }
+            else{
+              playGame = false;
+            }
+            break;
+
+          case OWIN: 
+            System.out.println("Game Over\n");
+            System.out.println(game.toString());
+            System.out.println("\nResult: OWIN"); 
+            System.out.println("Play Again (y)?: ");
+            playAgain = scan.next().charAt(0);
+            if(playAgain == 'y'){
+              playGame = true;
+              firstMove = true;
+            }
+            else{
+              playGame = false;
+            }
+            break;
+
+          case DRAW: 
+            System.out.println("Game Over\n");
+            System.out.println(game.toString());
+            System.out.println("\nResult: DRAW"); 
+            System.out.println("Play Again (y)?: ");
+            playAgain = scan.next().charAt(0);
+            if(playAgain == 'y'){
+              playGame = true;
+              firstMove = true;
+            }
+            else{
+              playGame = false;
+            }
+            break;
+
+          default:
+            currentPlayer = nextPlayer(currentPlayer);
+            promptNext(currentPlayer);
+            break;
+
+
+        }
+          
+      }
+      
+
+    }
 
     // YOUR CODE HERE
 
@@ -90,6 +173,16 @@ public class GameMain {
       }
     }
     return 3;
+  }
+
+  private static void promptNext(int currentPlayer){
+    if(currentPlayer == 0){
+      System.out.print("Player 1's Turn. \n");
+    }
+    else{
+      System.out.print("Player 2's Turn. \n");
+    }
+
   }
 
 }

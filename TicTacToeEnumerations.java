@@ -33,23 +33,13 @@ public class TicTacToeEnumerations {
     numColumns = aNumColumns;
     sizeToWin = aSizeToWin;
   }
-  //   this.gameState = GameState.PLAYING;
-  //   this.currentPlayer = CellValue.EMPTY;
-  //   this.lastPlayedPosition = 0;
-
-  //   int boardSize = numRows * numColumns;
-  //   board = new CellValue[boardSize];
-  //   for (int i=0; i<boardSize; i++) {
-  //     board[i] = CellValue.EMPTY;
-  //   }
-  // }
 
   /**
    * Generate a list of lists of all games, storing the
    * result in the member variables `allGames`.
    */
   public LinkedList<LinkedList<TicTacToe>> generateAllGames() {
-    TicTacToe game = new TicTacToe(this.numRows, this.numColumns, this.sizeToWin);
+    TicTacToe game = new TicTacToe(numRows, numColumns, sizeToWin);
     LinkedList<TicTacToe> baseLevel = new LinkedList<TicTacToe>();
     baseLevel.add(game);
     allGames.add(baseLevel);
@@ -73,6 +63,7 @@ public class TicTacToeEnumerations {
             for(int k = 0; k < allGames.get(counter).size(); k++){
               if(compare.equals(allGames.get(counter).get(k))){
                 isRepeated = true;
+                break;
               }
 
             }
@@ -88,6 +79,7 @@ public class TicTacToeEnumerations {
       for(int i = 0; i < allGames.get(counter).size(); i++){
         if(allGames.get(counter).get(i).gameState == GameState.PLAYING){
           valid = true;
+          break;
         }
       }
       counter++;

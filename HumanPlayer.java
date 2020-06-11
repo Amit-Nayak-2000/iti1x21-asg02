@@ -8,28 +8,39 @@ public class HumanPlayer implements Player{
         return false;
     }
     else{
+        boolean flag = true;
+
+        
         Scanner sc = new Scanner(System.in);
         int move = 0;
+        System.out.print("\n");
         System.out.println(game.toString());
-
-        if (game.nextPlayer() == CellValue.X){
-            // System.out.println("\n");
-            // System.out.println("\n");
-            System.out.println("\nX to play: ");
+        
+        while(flag){
+          if (game.nextPlayer() == CellValue.X){
             
-            move = sc.nextInt();
-        }
-        if (game.nextPlayer()  == CellValue.O) {
-            // System.out.println("\n");
-            // System.out.println("\n");
-            System.out.println("O to play: ");
+              System.out.print("\nX to play: ");
             
-            move = sc.nextInt();
-        }
-        System.out.println(game.play(move));
-        return true;
+              move = sc.nextInt();
+          }
+          if (game.nextPlayer()  == CellValue.O) {
+            
+              System.out.print("\nO to play: ");
+            
+              move = sc.nextInt();
+          }
 
+        
+          String message = game.play(move);
+          if(message != null){
+            System.out.println(message);
+          }
+          else{
+            break;
+          }
+        }
+
+    return true;
     }
   }
-
 }
