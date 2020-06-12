@@ -14,7 +14,8 @@ public class HumanPlayer implements Player{
         Scanner sc = new Scanner(System.in);
         int move = 0;
         System.out.print("\n");
-        System.out.println(game.toString());
+        System.out.print(game.toString());
+        System.out.print("\n");
         
         while(flag){
           if (game.nextPlayer() == CellValue.X){
