@@ -29,30 +29,41 @@ public class GameMain {
     TicTacToe game = new TicTacToe(lines,columns,wins);
     Player[] players = new Player[] {p1, p2};
 
+    //intial set of conditions for the "first move"
     boolean playGame = true;
     boolean firstMove = true;
     int currentPlayer = 0;
-    // char playAgain = ' ';
     
 
     Scanner scan = new Scanner(System.in);
 
+    //game loop, only ends if someone wins and player does not want to play again.
     while(playGame){
+      //following statements only if first move or game restarted.
       if(firstMove){
+        //intitializes new game
         game = new TicTacToe(lines,columns,wins);
+        //randomly picks a player based on the array of players 
         currentPlayer = (int)(players.length*Math.random());
+        //prompts which player's turn it is
         promptNext(currentPlayer);
-        //System.out.println(game.toString());
+        //the current player will play
         players[currentPlayer].play(game);
+        //changes who the current player is after the last player has made a move.
         currentPlayer = nextPlayer(currentPlayer);
+        //prompts the next player and sets the first move boolean to false so that this chain of statements isnt run again.
         promptNext(currentPlayer);
         firstMove = false;
         continue;
       }
 
+      //current player plays and the following switch statement is for
+      //if the game is a draw or win has occured, the game will ask the user if they want to play again. 
+      //if the user wants to play again,
       if(players[currentPlayer].play(game) == true){
         switch(game.gameState){
           case XWIN: 
+            //assumes player does not want to play again.
             playGame = false;
             System.out.println("Game Over\n");
             System.out.println(game.toString());
@@ -60,6 +71,7 @@ public class GameMain {
             System.out.println("Play Again (y)?: ");
             char playAgain = scan.next().charAt(0);
             if(playAgain == 'y'){
+              //if they want to play again restart from scratch.
               playGame = true;
               firstMove = true;
             }
@@ -99,10 +111,10 @@ public class GameMain {
             break;
 
           default:
+            //changes who the next player is and prompts them to play.
             currentPlayer = nextPlayer(currentPlayer);
             promptNext(currentPlayer);
             break;
-
 
         }
           
@@ -110,9 +122,6 @@ public class GameMain {
       
 
     }
-
-    // YOUR CODE HERE
-
   }
 
   /**
@@ -175,6 +184,11 @@ public class GameMain {
     return 3;
   }
 
+  /**
+   * prints to the screen whos turn it is.
+   *
+   * @param currentPlayer who the current player is
+   */
   private static void promptNext(int currentPlayer){
     if(currentPlayer == 0){
       System.out.print("Player 1's Turn. \n");

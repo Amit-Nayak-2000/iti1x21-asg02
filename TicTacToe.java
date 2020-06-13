@@ -391,11 +391,13 @@ public class TicTacToe {
   public int[] emptyPositions() {
     int freeSpace = (this.numRows * this.numColumns) - this.numRounds;
     int[] freeSlots = new int[freeSpace];
+    //counter variable allows for 0 based indexing.
     int counter = 0;
+    //for loop starts at 1 since valueAt function uses 1 based board positions.
     for(int i = 1; i <=(this.numRows * this.numColumns); i++){
         if(this.valueAt(i) == CellValue.EMPTY){
           freeSlots[counter] = i;
-          counter +=1;
+          counter +=1; 
         }
     }
     return freeSlots;
@@ -415,9 +417,11 @@ public class TicTacToe {
     clone.gameState = this.gameState;
     clone.currentPlayer = this.currentPlayer;
     clone.lastPlayedPosition = this.lastPlayedPosition;
+    //Iterates through the board and clones all the values before playing.
     for(int i=1; i <=(numRows * numColumns); i++){
 			clone.board[i-1] = this.valueAt(i);
 		}
+    //only plays next postition if it is valid.
     if(clone.valueAt(nextMove) == CellValue.EMPTY && clone.gameState == GameState.PLAYING){
       clone.play(nextMove);
       return clone;
@@ -437,16 +441,20 @@ public class TicTacToe {
    * @return True if they represent the same state
    */
   public boolean equals(Object obj) {
+    //checks if the other object is null or an instance of TicTacToe.
     if(!(obj instanceof TicTacToe) || obj == null){
       return false;
     }
 
+    //creates a TicTacToe game from the parameter for comparison.
     TicTacToe other = (TicTacToe) obj;
 
+    //Checks if dimensions are equal or not
     if(this.numRows != other.numRows || this.numColumns != other.numColumns || this.sizeToWin != other.sizeToWin){
       return false;
     }
-
+    
+    //checks board values
     for(int i = 0; i < (this.numRows*this.numColumns); i++){
       if(this.board[i] != other.valueAt(i+1)){
         return false;
