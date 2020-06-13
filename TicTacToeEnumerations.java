@@ -46,23 +46,25 @@ public class TicTacToeEnumerations {
     int counter = 1;
     boolean valid = true;
 
+    //loop runs while there are games still playing.
     while(valid){
       LinkedList<TicTacToe> nextLevel = new LinkedList<TicTacToe>();
       allGames.add(nextLevel);
 
       for(int i = 0; i < allGames.get(counter - 1).size(); i++){
-        
+        //gets all of the empty slots from the previous level to play on.
+        int[] emptySlots = allGames.get(counter-1).get(i).emptyPositions();
+
         if(allGames.get(counter-1).get(i).gameState == GameState.PLAYING){
-          //gets all of the empty slots from the previous level to play on.
-          int[] emptySlots = allGames.get(counter-1).get(i).emptyPositions();
-
-
           for(int j = 0; j < emptySlots.length; j++){
-            //creates game with next position played.
+            //creates game with next position played for comparison.
+            //if game passes comparison it is added to linked list.
             TicTacToe compare = allGames.get(counter - 1).get(i).cloneNextPlay(emptySlots[j]);
-            
-            //assume game is not a repeat, then checks if the game is a repeat with other games in the level.
+  
+            //assume game is not a repeat
             boolean isRepeated = false;
+            
+            //checks if the game is a repeat with other games in the level.
             for(int k = 0; k < allGames.get(counter).size(); k++){
               if(compare.equals(allGames.get(counter).get(k))){
                 isRepeated = true;
