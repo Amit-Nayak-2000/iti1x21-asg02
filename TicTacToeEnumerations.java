@@ -2,16 +2,12 @@ import java.util.LinkedList;
 
 public class TicTacToeEnumerations {
 
-  // CellValue[] board;
+  //parameters of board to analyse.
   int numRows;
   int numColumns;
-  // int numRounds;
-  // GameState gameState;
   int sizeToWin;
-  // CellValue currentPlayer;
-  // int lastPlayedPosition;
 
-  // YOUR CODE HERE
+
 
   /**
    * The list of lists of all generated games
@@ -39,10 +35,14 @@ public class TicTacToeEnumerations {
    * result in the member variables `allGames`.
    */
   public LinkedList<LinkedList<TicTacToe>> generateAllGames() {
+    //level 0 game.
     TicTacToe game = new TicTacToe(numRows, numColumns, sizeToWin);
+    //linked list that contains all (1) game of level 0
     LinkedList<TicTacToe> baseLevel = new LinkedList<TicTacToe>();
+    //adds game to base level and adds level to main linked list.
     baseLevel.add(game);
     allGames.add(baseLevel);
+    //counter will be used for current level and dealing with the previous level.
     int counter = 1;
     boolean valid = true;
 
@@ -53,21 +53,24 @@ public class TicTacToeEnumerations {
       for(int i = 0; i < allGames.get(counter - 1).size(); i++){
         
         if(allGames.get(counter-1).get(i).gameState == GameState.PLAYING){
+          //gets all of the empty slots from the previous level to play on.
           int[] emptySlots = allGames.get(counter-1).get(i).emptyPositions();
 
 
           for(int j = 0; j < emptySlots.length; j++){
+            //creates game with next position played.
             TicTacToe compare = allGames.get(counter - 1).get(i).cloneNextPlay(emptySlots[j]);
+            
+            //assume game is not a repeat, then checks if the game is a repeat with other games in the level.
             boolean isRepeated = false;
-
             for(int k = 0; k < allGames.get(counter).size(); k++){
               if(compare.equals(allGames.get(counter).get(k))){
                 isRepeated = true;
                 break;
               }
-
             }
 
+            //only adds games that are not repeats.
             if(isRepeated == false){
               allGames.get(counter).add(compare);
             }
@@ -76,15 +79,17 @@ public class TicTacToeEnumerations {
       }
       
       valid = false;
+      //assumes all games are done being playable, if loop encouters one game that is playable it will break loop and move onto next level.
       for(int i = 0; i < allGames.get(counter).size(); i++){
         if(allGames.get(counter).get(i).gameState == GameState.PLAYING){
           valid = true;
           break;
         }
       }
+      //increments the next level to work with
       counter++;
     }
-		// returns the linked list of linked lists of tic tac toe games
+		// returns the linked list of linked lists of all of the games.
 		return allGames;
   }
 
